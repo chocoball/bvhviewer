@@ -12,6 +12,9 @@ public:
 
 	void makeRoot(const QString &name) ;
 	CBvhNode *getRoot() { return m_pRootNode ; }
+	CBvhMotion *getMotion() { return &m_motion ; }
+
+	void dump(QString &ret) ;
 
 private:
 	CBvhNode		*m_pRootNode ;

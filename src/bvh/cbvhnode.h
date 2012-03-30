@@ -4,12 +4,12 @@
 #include <QStringList>
 
 enum {
-	BvhChannle_Xposition = 0,
-	BvhChannle_Yposition,
-	BvhChannle_Zposition,
-	BvhChannle_Xrotation,
-	BvhChannle_Yrotation,
-	BvhChannle_Zrotation
+	kBvhChannel_Xposition = 0,
+	kBvhChannel_Yposition,
+	kBvhChannel_Zposition,
+	kBvhChannel_Xrotation,
+	kBvhChannel_Yrotation,
+	kBvhChannel_Zrotation
 } ;
 
 #define kBvhChannelNum		6
@@ -19,12 +19,14 @@ public:
 	CBvhNode(const QString &name, CBvhNode *parent = 0) ;
 	~CBvhNode() ;
 
-	void setOffset(float x, float y, float z) ;
+	void setOffset(double x, double y, double z) ;
 	void addChannel(int channel, int order) ;
+
+	void dump(QString &ret) ;
 
 private:
 	QString				m_name ;
-	float				m_offsets[3] ;
+	double				m_offsets[3] ;
 	int					m_nChannel ;
 	int					m_channels[kBvhChannelNum][2] ;
 

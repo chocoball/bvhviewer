@@ -20,4 +20,11 @@ void CBvh::makeRoot(const QString &name)
 	m_pRootNode = new CBvhNode(name) ;
 }
 
+void CBvh::dump(QString &ret)
+{
+	ret = "CBvhDump\n" ;
+	if ( m_pRootNode ) {
+		m_pRootNode->dump(ret) ;
+	}
+}
 
