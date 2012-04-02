@@ -30,11 +30,30 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->centralWidget->setLayout(pLayout) ;
 
 	setAcceptDrops(true) ;
+
+	QTimer *pTimer = new QTimer(this) ;
+	pTimer->setInterval(1000/30);
+	connect(pTimer, SIGNAL(timeout()), this, SLOT(slot_timerEvent())) ;
+	m_oldTime.start() ;
+	pTimer->start();
+	m_bRead = false ;
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::slot_timerEvent()
+{
+	if ( !m_bRead ) {
+		m_oldTime.restart() ;
+		return ;
+	}
+	float delta = (float)m_oldTime.elapsed() / 1000.0f ;
+	m_bvh.update(delta) ;
+	m_pGlView->updateGL();
+	m_oldTime.restart() ;
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent *event)
@@ -44,6 +63,8 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *event)
 
 void MainWindow::dropEvent(QDropEvent *event)
 {
+	m_bRead = false ;
+
 	QList<QUrl> url = event->mimeData()->urls() ;
 
 	if ( url.size() > 0 ) {
@@ -59,6 +80,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 			m_pModel->resetItem() ;
 			m_pModel->setBvh(m_bvh) ;
 			m_pGlView->setBvh(m_bvh) ;
+			m_bRead = true ;
 		}
 	}
 }

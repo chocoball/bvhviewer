@@ -36,7 +36,7 @@ bool CBvhLoader::load(QFile *pFile, CBvh &bvh)
 					bvh.getMotion()->setFrameNum(strs[1].toInt()) ;
 				}
 				else if ( strs[0] == "Frame" && strs[1] == "Time:" ) {
-					bvh.getMotion()->setFrameTime(strs[1].toDouble()) ;
+					bvh.getMotion()->setFrameTime(strs[2].toDouble()) ;
 				}
 				else {
 					QList<double> datas ;

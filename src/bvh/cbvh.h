@@ -11,6 +11,7 @@ public:
 	~CBvh() ;
 
 	void makeRoot(const QString &name) ;
+	void update(float delta) ;
 	void updateMatrix(int frame) ;
 
 	CBvhNode *getRoot() { return m_pRootNode ; }
@@ -24,6 +25,9 @@ private:
 private:
 	CBvhNode		*m_pRootNode ;
 	CBvhMotion		m_motion ;
+
+	int				m_currFrame ;
+	float			m_currTime ;
 } ;
 
 #endif // CBVH_H

@@ -22,6 +22,9 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+public slots:
+	void slot_timerEvent() ;
+
 protected:
 	void dragEnterEvent(QDragEnterEvent *) ;
 	void dropEvent(QDropEvent *) ;
@@ -32,6 +35,9 @@ private:
 	CBvhModel		*m_pModel ;
 	CGLView			*m_pGlView ;
 	CBvh			m_bvh ;
+
+	QTime			m_oldTime ;
+	bool			m_bRead ;
 };
 
 #endif // MAINWINDOW_H

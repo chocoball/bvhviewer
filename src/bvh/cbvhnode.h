@@ -33,6 +33,11 @@ public:
 	CBvhNode *child(int index) { return m_childPtrs[index] ; }
 	QMatrix4x4 &getMatrix() { return m_mtx ; }
 
+	QVector3D getOffset()
+	{
+		return QVector3D(m_offsets[0], m_offsets[1], m_offsets[2]) ;
+	}
+
 private:
 	QString				m_name ;
 	double				m_offsets[3] ;

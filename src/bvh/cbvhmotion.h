@@ -14,6 +14,8 @@ public:
 	void addFrameData(const QList<double> &datas) { m_motions.append(datas) ; }
 
 	double getFrameData(int frame, int order) { return m_motions.at(frame).at(order) ; }
+	int getFrame() { return m_nFrame ; }
+	float getFrameTime() { return m_fFrameTime ; }
 
 private:
 	int						m_nFrame ;
