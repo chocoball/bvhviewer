@@ -1,14 +1,33 @@
 #include <QDebug>
+#include <QSplitter>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+	QMainWindow(parent),
+	ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
+
+	m_pModel = new CBvhModel(this) ;
+
+	QHBoxLayout *pLayout = new QHBoxLayout(ui->centralWidget) ;
+	QSplitter *pSplitter = new QSplitter(ui->centralWidget) ;
+	pLayout->addWidget(pSplitter);
+
+	QTreeView *pTreeView = new QTreeView(this) ;
+	pTreeView->setModel(m_pModel);
+	pTreeView->header()->setHidden(true) ;
+
+	m_pGlView = new CGLView(ui->centralWidget) ;
+	m_pGlView->show();
+
+	pSplitter->addWidget(pTreeView) ;
+	pSplitter->addWidget(m_pGlView) ;
+
+	ui->centralWidget->setLayout(pLayout) ;
 
 	setAcceptDrops(true) ;
 }
@@ -34,12 +53,12 @@ void MainWindow::dropEvent(QDropEvent *event)
 			return ;
 		}
 
-		CBvh bvh ;
 		CBvhLoader bvhLoader ;
-		if ( bvhLoader.load(&file, bvh) ) {
-			QString str ;
-			bvh.dump(str);
-			qDebug() << str ;
+		if ( bvhLoader.load(&file, m_bvh) ) {
+			m_bvh.updateMatrix(0) ;
+			m_pModel->resetItem() ;
+			m_pModel->setBvh(m_bvh) ;
+			m_pGlView->setBvh(m_bvh) ;
 		}
 	}
 }

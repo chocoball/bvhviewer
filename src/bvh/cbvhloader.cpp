@@ -38,6 +38,15 @@ bool CBvhLoader::load(QFile *pFile, CBvh &bvh)
 				else if ( strs[0] == "Frame" && strs[1] == "Time:" ) {
 					bvh.getMotion()->setFrameTime(strs[1].toDouble()) ;
 				}
+				else {
+					QList<double> datas ;
+					for ( int i = 0 ; i < strs.size() ; i ++ ) {
+						datas.append(strs[i].toDouble()) ;
+					}
+					if ( datas.size() > 0 ) {
+						bvh.getMotion()->addFrameData(datas) ;
+					}
+				}
 
 				break ;
 		}

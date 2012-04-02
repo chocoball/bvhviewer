@@ -11,10 +11,15 @@ public:
 	~CBvh() ;
 
 	void makeRoot(const QString &name) ;
+	void updateMatrix(int frame) ;
+
 	CBvhNode *getRoot() { return m_pRootNode ; }
 	CBvhMotion *getMotion() { return &m_motion ; }
 
 	void dump(QString &ret) ;
+
+private:
+	void updateMatrix(int frame, CBvhNode *pNode) ;
 
 private:
 	CBvhNode		*m_pRootNode ;
